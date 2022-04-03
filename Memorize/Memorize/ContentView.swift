@@ -8,19 +8,51 @@
 import SwiftUI
 
 struct ContentView: View {
-    var emojis = ["😊","🥰","🤣","😎"]
+    var emojis = ["😊","🥰","🤣","😎", "😇", "😘", "🐶", "🐹", "🐼", "🐯", "🦄", "🛖", "🏠", "🏡", "🏘", "🏚", "🏗", "📚", "🎱", "⭐️", "🏛", "🙋🏻", "👻", "🥳", "🥲", "☺️", " 🙄", "🤩", "🥴"]
+    
+    @State var emojiCount = 24
+    
     var body: some View {
-        HStack {
-            ForEach(emojis, id:\.self, content: { emoji in
-                CardView(content: emoji)
-            })
+        VStack{
+            ScrollView{
+                LazyVGrid(columns: [GridItem(.adaptive(minimum:70))]){
+                    ForEach(emojis[0..<emojiCount], id:\.self) { emoji in
+                        CardView(content: emoji)
+                        .aspectRatio(5/8, contentMode: .fit)
+                    }
+                }
+            }
+            .padding(.horizontal)
+            .foregroundColor(.pink)
+            
            
+            .padding(.horizontal)
+            .font(.largeTitle)
+            
         }
-        .padding(.all)
-        .foregroundColor(.pink)
       
         
         
+    }
+    
+    var remove :some View {
+        Button(action: {
+            if emojiCount > 1{
+                emojiCount -= 1
+            }
+        }, label: {
+            Image(systemName: "minus.circle")
+        })
+    }
+    
+    var add :some View {
+        Button(action: {
+            if emojiCount > 1{
+                emojiCount += 1
+            }
+        }, label: {
+            Image(systemName: "plus.circle")
+        })
     }
 }
 
@@ -43,7 +75,8 @@ struct CardView : View {
                 .fill()
                 .foregroundColor(.white)
                 shape
-                .stroke(lineWidth: 5)
+                .strokeBorder(lineWidth: 5)
+                .foregroundColor(.pink)
                 
                 Text(content).font(.largeTitle)
                     
